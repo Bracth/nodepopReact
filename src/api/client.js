@@ -18,4 +18,7 @@ client.interceptors.response.use(
   }
 );
 
+export const setAuthorizationHeader = (token) =>
+  (client.defaults.headers.common["Authorization"] = `Bearer ${token}`);
+
 export default client;
