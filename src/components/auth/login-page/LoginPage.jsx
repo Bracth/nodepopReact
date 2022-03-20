@@ -1,7 +1,10 @@
 import {useState} from "react"
+import { useAuth } from "../context";
 import { login } from "../service";
 
 function LoginPage() {
+    
+    const { handleLogin } = useAuth();
     
     const [credentials, setCredentials] = useState({
         email: "",
@@ -24,7 +27,8 @@ function LoginPage() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-        await login(credentials);
+            await login(credentials);
+            handleLogin();
         } catch (error) {
             console.log(error.message)
         }
