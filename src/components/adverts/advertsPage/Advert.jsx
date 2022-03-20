@@ -1,12 +1,12 @@
-import img from "../../../assets/defaultImgAdvert.jpg"
-
-function Advert() {
+function Advert({props}) {
+    const { name, sale, price, tags, img } = props;
+    
     return <section>
         <img src={img} alt="" />
-        <h1>Movil</h1>
-        <span>Sale</span>
-        <span>150$</span>
-        <p>Tags: Movil</p>
+        <h1>{ name }</h1>
+        <span>{ sale }</span>
+        <span>{ price }</span>
+        <p>Tags: { tags }</p>
     </section>
 }
 
