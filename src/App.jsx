@@ -5,6 +5,7 @@ import AdvertsPage from "./components/adverts/advertsPage/AdvertsPage";
 import LoginPage from "./components/auth/login-page/LoginPage";
 import { AuthContextProvider } from "./components/auth/context";
 import Layout from "./components/layout/Layout";
+import ConectedRequireAuth from "./components/auth/RequireAut";
 
 function App({ isInitiallyLogged }) {
 

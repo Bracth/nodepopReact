@@ -1,4 +1,7 @@
-import {useState} from "react"
+import { useState } from "react"
+import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button"
+
 import { useAuth } from "../context";
 import { login } from "../service";
 
@@ -35,14 +38,26 @@ function LoginPage() {
     }
     
     return <main>
-        <h1>Login to Nodepop</h1>
-        <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="email" name="email" value={email} onChange={handleChange}/>
-            <input type="password" placeholder="password" name="password" value={password} onChange={handleChange}/>
-            <input type="checkbox" name="remember" value="remember" checked={remember} onChange={handleChange}/>
-            <label htmlFor="remember">remember</label>
-            <button>Login</button>
-        </form>
+        <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                 <Form.Label>Email address</Form.Label>
+                <Form.Control name="email" value={email} onChange={handleChange} type="email" placeholder="Enter email" />
+                 <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+                </Form.Text>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={handleChange}/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Remember me!" name="remember" value="remember" checked={remember} onChange={handleChange}/>
+            </Form.Group>
+            <Button variant="primary" type="submit">
+                Submit
+            </Button>
+        </Form>
     </main>
 }
 
