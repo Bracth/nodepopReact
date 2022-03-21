@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import storage from "./utils/storage";
 import { setAuthorizationHeader } from "./api/client";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const acessToken = storage.get("auth");
 setAuthorizationHeader(acessToken);
