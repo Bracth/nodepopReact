@@ -15,9 +15,13 @@ function App({ isInitiallyLogged }) {
     setIsLogged(true);
   }
   
+  const handleLogout = () => {
+    setIsLogged(false)
+  }
+  
   return (
     <div className="App">
-      <AuthContextProvider value={{ isLogged, handleLogin }}>
+      <AuthContextProvider value={{ isLogged, handleLogin, handleLogout }}>
         <Routes>
           <Route path="/" element={<Layout />}>
               <Route path="/" element={ <Navigate to="/adverts"/> }></Route>
