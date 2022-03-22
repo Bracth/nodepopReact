@@ -18,9 +18,9 @@ function Header() {
             <Stack direction="horizontal" gap={3}>
                 <Link to="/"><h2>Nodepop</h2></Link>
                 {isLogged ? <Button variant="outline-secondary" onClick={handleLogoutClick}>Logout</Button>
-                    : <Button variant="outline-secondary" as={Link} to="/login">Login</Button>}
+                    : <><Button variant="outline-secondary" as={Link} to="/login">Login</Button>
+                        <Button variant="outline-secondary" as={Link} to="/register">Register</Button></>}
             </Stack>
-            
         </Container>
     </header>
 }
