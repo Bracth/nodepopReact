@@ -5,7 +5,7 @@ import AdvertsPage from "./components/adverts/advertsPage/AdvertsPage";
 import LoginPage from "./components/auth/login-page/LoginPage";
 import { AuthContextProvider } from "./components/auth/context";
 import Layout from "./components/layout/Layout";
-import ConectedRequireAuth from "./components/auth/RequireAut";
+import AdvertDetail from "./components/adverts/advertDetail/AdvertDetail";
 
 function App({ isInitiallyLogged }) {
 
@@ -19,8 +19,10 @@ function App({ isInitiallyLogged }) {
     <div className="App">
       <AuthContextProvider value={{ isLogged, handleLogin }}>
         <Routes>
-          <Route path="/" element={ <Layout/> }>
-              <Route path="/" element={<AdvertsPage/>}></Route>
+          <Route path="/" element={<Layout />}>
+              <Route path="/" element={ <Navigate to="/adverts"/> }></Route>
+             <Route path="/adverts" element={<AdvertsPage />}></Route>
+             <Route path="/adverts:id" element={ <AdvertDetail/>}></Route>
              <Route path="/login" element={<LoginPage />} />
              <Route path="/404" element={<div> 404 | Not found Page</div>}></Route>
              <Route path="*" element={<Navigate to="/404" />}></Route>
