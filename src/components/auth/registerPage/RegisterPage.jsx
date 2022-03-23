@@ -1,9 +1,11 @@
 import { useState } from "react"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
+import { login, register } from "../service";
+import { useAuth } from "../context";
 
 function RegisterPage() {
-    
+    const { handleLogin } = useAuth();
     
     const [credentials, setCredentials] = useState({
         email: "",
@@ -21,8 +23,19 @@ function RegisterPage() {
         }))
     }
     
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            await register(credentials);
+            const loginCredentials = {email, password, remember: true}
+            await login(loginCredentials);
+            handleLogin();
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
     
-    return <main>
+    return <main onSubmit={ handleSubmit }>
         <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                  <Form.Label>Email address</Form.Label>

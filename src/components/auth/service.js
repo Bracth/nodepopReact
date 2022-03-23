@@ -24,3 +24,11 @@ export const logout = async () => {
     console.log(error.message);
   }
 };
+
+export const register = async (credentials) => {
+  try {
+    await client.post("/auth/signup", credentials);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
