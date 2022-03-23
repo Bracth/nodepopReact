@@ -4,10 +4,15 @@ import Button from "react-bootstrap/Button"
 
 import { useAuth } from "../context";
 import { login } from "../service";
+import { useLocation, useNavigate } from "react-router";
 
 function LoginPage() {
     
     const { handleLogin } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    
+    
     
     const [credentials, setCredentials] = useState({
         email: "",
@@ -32,6 +37,8 @@ function LoginPage() {
         try {
             await login(credentials);
             handleLogin();
+            const from = location.state?.from?.pathname || "/";
+            navigate(from, { replace: true });
         } catch (error) {
             console.log(error.message)
         }

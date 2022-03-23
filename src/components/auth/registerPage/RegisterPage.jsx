@@ -3,9 +3,12 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import { login, register } from "../service";
 import { useAuth } from "../context";
+import { useLocation, useNavigate } from "react-router";
 
 function RegisterPage() {
     const { handleLogin } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
     
     const [credentials, setCredentials] = useState({
         email: "",
@@ -30,6 +33,8 @@ function RegisterPage() {
             const loginCredentials = {email, password, remember: true}
             await login(loginCredentials);
             handleLogin();
+            const from = location.state?.from?.pathname || "/";
+            navigate(from, { replace: true });
         } catch (error) {
             console.log(error.message);
         }
