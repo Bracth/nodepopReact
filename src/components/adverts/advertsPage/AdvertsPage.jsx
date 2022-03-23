@@ -16,13 +16,13 @@ function AdvertsPage() {
         const result = adverts.filter(advert => {
            return advert.name.toLowerCase().includes(filters.name.toLowerCase())
         })
-        console.log(result)
+        setfilteredAdverts(result)
     }
     
     return <main>
         <AdvertsFilter handleFilter={handleFilter}/>
         <Row xs={1} md={2} className="g-4">
-        {adverts.length ? (adverts.map(filteredAdvert => {
+        {adverts.length ? (filteredAdverts.map(filteredAdvert => {
             return <Col key={filteredAdvert.id}>
                 <Link id="advert-element" to={`/adverts${filteredAdvert.id}`}>
                     <Advert props={filteredAdvert} />
