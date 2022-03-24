@@ -26,7 +26,21 @@ function AdvertsPage() {
                 return advert;
             }
         })
-        setfilteredAdverts(result2)
+        
+        const result3 = result2.filter(advert => {
+            if (advert.price >= filters.minPrice) {
+                return advert
+            }
+        })
+        
+         const result4 = result3.filter(advert => {
+            if (advert.price <= filters.maxPrice) {
+                return advert
+            }
+        })
+        
+        
+        setfilteredAdverts(result4)
     }
     
     return <main>

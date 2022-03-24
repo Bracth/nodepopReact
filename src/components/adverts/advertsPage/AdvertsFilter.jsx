@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form"
 
+
 function AdvertsFilter({ handleFilter }) {
 
     const [filters, setFilters] = useState({
         name: "",
-        sale: "all"
+        sale: "all",
+        minPrice: 1,
+        maxPrice: 10000
     });
     
-    const { name, sale } = filters;
+    const { name, sale, minPrice, maxPrice } = filters;
     
     const handleChange = (event) => {
         setFilters(filters => ({
@@ -57,7 +60,13 @@ function AdvertsFilter({ handleFilter }) {
         value="buy"
         checked={sale === "buy" ? true : false}
             />
-            </div>
+        </div>
+    
+        <Form.Label>Min Price: { minPrice }€</Form.Label>
+        <Form.Range onChange={handleChange} value={minPrice} min={1} max={maxPrice } name="minPrice"/>
+        
+        <Form.Label>Max Price: { maxPrice }€</Form.Label>
+        <Form.Range onChange={handleChange} value={maxPrice} min={minPrice} max={10000 } name="maxPrice"/>    
         </Form>
 }
 
