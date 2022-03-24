@@ -4,10 +4,11 @@ import Form from "react-bootstrap/Form"
 function AdvertsFilter({ handleFilter }) {
 
     const [filters, setFilters] = useState({
-        name: ""
+        name: "",
+        sale: "all"
     });
     
-    const { name } = filters;
+    const { name, sale } = filters;
     
     const handleChange = (event) => {
         setFilters(filters => ({
@@ -26,26 +27,35 @@ function AdvertsFilter({ handleFilter }) {
         </Form.Group>
         
     <div key={`inline-radio`} className="mb-3">
-      <Form.Check
+            <Form.Check
+        onChange={handleChange}
         inline
         label="ALL"
-        name="group1"
+        name="sale"
         type="radio"
         id={`inline-radio-1`}
+        value="all"
+        checked={sale === "all" ? true : false}
       />
       <Form.Check
         inline
+        onChange={handleChange}
         label="SALE"
-        name="group1"
+        name="sale"
         type="radio"
         id={`inline-radio-2`}
+        value="sale"
+        checked={sale === "sale" ? true : false}       
       />
-      <Form.Check
+        <Form.Check
+        onChange={handleChange}
         inline
         label="BUY"
-        name="group1"
+        name="sale"
         type="radio"
         id={`inline-radio-3`}
+        value="buy"
+        checked={sale === "buy" ? true : false}
             />
             </div>
         </Form>

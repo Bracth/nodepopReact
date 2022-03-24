@@ -16,7 +16,17 @@ function AdvertsPage() {
         const result = adverts.filter(advert => {
            return advert.name.toLowerCase().includes(filters.name.toLowerCase())
         })
-        setfilteredAdverts(result)
+        
+        const result2 = result.filter(advert => {
+            if (filters.sale === "sale") {
+                return advert.sale;
+            } else if (filters.sale === "buy") {
+                return !advert.sale;
+            } else {
+                return advert;
+            }
+        })
+        setfilteredAdverts(result2)
     }
     
     return <main>
