@@ -1,4 +1,7 @@
+import client from "../../api/client";
 import img from "../../assets/defaultImgAdvert.jpg";
+
+const advertBaseUrl = "/v1/adverts";
 
 export const adverts = [
   {
@@ -52,3 +55,12 @@ export const adverts = [
     id: 8,
   },
 ];
+
+export const createAdvert = async (advert) => {
+  const url = advertBaseUrl;
+  try {
+    return await client.post(url, advert);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
