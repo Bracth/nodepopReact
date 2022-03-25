@@ -12,7 +12,7 @@ function Advert({ props }) {
                <span>{ price }$</span> 
             </Card.Text>
             <Card.Footer>
-                <small className="text-muted">Tags: {tags}</small>
+                <small className="text-muted">Tags: {tags.map(tag => `${tag}. `)}</small>
             </Card.Footer>
         </Card.Body>
     </Card>
