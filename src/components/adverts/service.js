@@ -56,6 +56,11 @@ export const adverts = [
   },
 ];
 
+export const getLatestAdverts = () => {
+  const url = advertBaseUrl;
+  return client.get(url);
+};
+
 export const createAdvert = async (advert) => {
   const url = advertBaseUrl;
   try {

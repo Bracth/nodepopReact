@@ -1,16 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 
 import Advert from "../Advert"
-import { adverts } from "../service";
+import { getLatestAdverts } from "../service";
 import "./advertsPage.css"
 import AdvertsFilter from "./AdvertsFilter";
 
+
 function AdvertsPage() {
+    const [filteredAdverts, setfilteredAdverts] = useState([]);
+    const [adverts, setAdverts] = useState([])
     
-    const [filteredAdverts, setfilteredAdverts] = useState(adverts);
+const handleGetAdverts = async () => {
+    try {
+        const adverts = await getLatestAdverts();
+        setAdverts(adverts)
+        setfilteredAdverts(adverts)
+    } catch (error) {
+        console.log(error.message)
+    }
+    }
+    
+    useEffect(() => {
+        handleGetAdverts();
+    }, []);
     
     const handleFilter = (filters) => {
         const result = adverts.filter(advert => {

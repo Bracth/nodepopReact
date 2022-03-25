@@ -7,7 +7,9 @@ import { setAuthorizationHeader } from "./api/client";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const acessToken = storage.get("auth");
-setAuthorizationHeader(acessToken);
+if (acessToken) {
+  setAuthorizationHeader(acessToken);
+}
 
 ReactDOM.render(
   <React.StrictMode>

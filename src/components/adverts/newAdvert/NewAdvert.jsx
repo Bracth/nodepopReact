@@ -15,18 +15,19 @@ function NewAdvert() {
         motor: false,
         mobile: false,
         work: false,
-        photo: ""
     });
+    
+    const [tags, setTags] = useState([])
+    
+    const [photo, setPhoto] = useState(null)
     
     const [disabled, setDisabled] = useState(true)
     
-    const { name, price, saling, lifestyle, motor, mobile, work, photo } = advertInfo;
-    
-    const tags = [];
+    const { name, price, saling, lifestyle, motor, mobile, work} = advertInfo;
     
     const handleChange = (event) => {
-        setAdvertInfo(info => ({
-            ...info,
+        setAdvertInfo(advertInfo => ({
+            ...advertInfo,
             [event.target.name]:
                 event.target.type === "checkbox" ?
                     event.target.checked
@@ -36,21 +37,23 @@ function NewAdvert() {
     
     useEffect(() => { 
         
+        const filterTags = [];
+        
         if (motor === true) {
-            tags.push("motor");
+            filterTags.push("motor");
         }
          if (mobile === true) {
-            tags.push("mobile");
+            filterTags.push("mobile");
         }
          if (lifestyle === true) {
-            tags.push("lifestyle");
+            filterTags.push("lifestyle");
         }
          if (work === true) {
-            tags.push("work");
+            filterTags.push("work");
         }
         
         if (name) {
-            if (tags.length > 0) {
+            if (filterTags.length > 0) {
                 setDisabled(false)
             } else {
                 setDisabled(true)
@@ -58,6 +61,8 @@ function NewAdvert() {
         } else {
             setDisabled(true)
         }
+        
+        setTags(filterTags);
         
     }, [advertInfo]);
     
@@ -70,12 +75,42 @@ function NewAdvert() {
             sale = false
         }
         
-        const advertData = { name, price, sale, tags, photo }
+        const formData = new FormData()
         
-        console.log(advertData);
-        
-        createAdvert(advertData);
+        formData.append("name", name)
+        formData.append("price", price)
+        formData.append("sale", sale)
+        formData.append("tags", tags)
+        if (photo) {
+        formData.append("photo", photo)
+        }
+       
+        createAdvert(formData);
     } 
+    
+    
+         const uploadImage = async (e) => {
+             const file = e.target.files[0];
+             
+             const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+             
+             const base64 = await convertBase64(file);
+             setPhoto(base64)
+
+    }
     
     return <main>
         <Form onSubmit={handleSubmit}>
@@ -131,7 +166,7 @@ function NewAdvert() {
             
             <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>Select an Image for the advert</Form.Label>
-                <Form.Control type="file" onChange={handleChange} name="photo"/>
+                <Form.Control type="file" onChange={uploadImage} name="photo"/>
             </Form.Group>
             
             <Button variant="primary" type="submit" disabled={disabled}>
