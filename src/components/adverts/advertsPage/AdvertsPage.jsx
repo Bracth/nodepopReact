@@ -37,10 +37,38 @@ function AdvertsPage() {
             if (advert.price <= filters.maxPrice) {
                 return advert
             }
-        })
-        
-        
+         })
         setfilteredAdverts(result4)
+        
+        const tagFilters = [];
+        
+        if (filters.motor === true) {
+            tagFilters.push("motor");
+        }
+         if (filters.mobile === true) {
+            tagFilters.push("mobile");
+        }
+         if (filters.lifestyle === true) {
+            tagFilters.push("lifestyle");
+        }
+         if (filters.work === true) {
+            tagFilters.push("work");
+        }
+        
+        if (tagFilters.length > 0) {
+        const result5 = result4.filter(advert => {
+            return advert.tags.some(tag => {
+                for (const tagFilter of tagFilters) {
+                    if (tag === tagFilter) {
+                        return true
+                    } 
+                }
+            })
+        })
+            setfilteredAdverts(result5);
+        }
+        
+        
     }
     
     return <main>
