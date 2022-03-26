@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 
 import Advert from "../Advert"
-import { getLatestAdverts } from "../service";
+import { getLastedsAdverts  } from "../service";
 import "./advertsPage.css"
 import AdvertsFilter from "./AdvertsFilter";
 
@@ -15,7 +15,7 @@ function AdvertsPage() {
     
 const handleGetAdverts = async () => {
     try {
-        const adverts = await getLatestAdverts();
+        const adverts = await getLastedsAdverts();
         setAdverts(adverts)
         setfilteredAdverts(adverts)
     } catch (error) {

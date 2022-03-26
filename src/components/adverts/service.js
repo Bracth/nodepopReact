@@ -56,8 +56,14 @@ export const adverts = [
   },
 ];
 
-export const getLatestAdverts = () => {
+export const getLastedsAdverts = () => {
   const url = advertBaseUrl;
+  return client.get(url);
+};
+
+export const getLastedAdvert = (id) => {
+  const url = `${advertBaseUrl}/${id}`;
+  console.log(url);
   return client.get(url);
 };
 
