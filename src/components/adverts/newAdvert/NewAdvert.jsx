@@ -102,7 +102,6 @@ function NewAdvert() {
     }
     
     if (advertId) {
-        console.log(advertId)
     return <Navigate to={`/adverts${advertId}`}/>
   }
     

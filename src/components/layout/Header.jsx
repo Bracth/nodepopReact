@@ -13,7 +13,7 @@ function Header() {
         handleLogout();
     }
     
-    return <header>
+    return <header className="mb-3 mt-3">
         <Container>
             <Stack direction="horizontal" gap={3}>
                 <Link to="/"><h2>Nodepop</h2></Link>

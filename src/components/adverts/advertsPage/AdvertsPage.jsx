@@ -29,6 +29,8 @@ const handleGetAdverts = async () => {
     }, []);
     
     const handleFilter = (filters) => {
+        let tagFilter = null
+        
         const result = adverts.filter(advert => {
            return advert.name.toLowerCase().includes(filters.name.toLowerCase())
         })
@@ -54,37 +56,53 @@ const handleGetAdverts = async () => {
                 return advert
             }
          })
-        setfilteredAdverts(result4)
         
-        const tagFilters = [];
+         if (filters.lifestyle === true) {
+            tagFilter = "lifestyle";
+        }
+        
+        const result5 = result4.filter(advert => {
+            if (tagFilter) {
+                return advert.tags.includes(tagFilter)
+            }
+            return true
+        })
+        
+         if (filters.mobile === true) {
+            tagFilter = "mobile";
+        }
+        
+        const result6 = result5.filter(advert => {
+            if (tagFilter) {
+                return advert.tags.includes(tagFilter)
+            }
+            return true
+        })
         
         if (filters.motor === true) {
-            tagFilters.push("motor");
-        }
-         if (filters.mobile === true) {
-            tagFilters.push("mobile");
-        }
-         if (filters.lifestyle === true) {
-            tagFilters.push("lifestyle");
-        }
-         if (filters.work === true) {
-            tagFilters.push("work");
+            tagFilter = "motor";
         }
         
-        if (tagFilters.length > 0) {
-        const result5 = result4.filter(advert => {
-            return advert.tags.some(tag => {
-                for (const tagFilter of tagFilters) {
-                    if (tag === tagFilter) {
-                        return true
-                    } 
-                }
-            })
+        const result7 = result6.filter(advert => {
+            if (tagFilter) {
+                return advert.tags.includes(tagFilter)
+            }
+            return true
         })
-            setfilteredAdverts(result5);
+        
+        if (filters.work === true) {
+            tagFilter = "work";
         }
         
+        const result8 = result7.filter(advert => {
+            if (tagFilter) {
+                return advert.tags.includes(tagFilter)
+            }
+            return true
+        })
         
+        setfilteredAdverts(result8)
+
     }
     
     return <main>
