@@ -23,9 +23,10 @@ function AdvertDetail() {
     }
     }
     
-    handleGetAdvert(id);
+    useEffect(() => {
+     handleGetAdvert(id);
+    }, []);
     
-    console.log(advert)
     
     return <Advert props={advert}></Advert>
 }

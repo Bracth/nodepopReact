@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form"
 import Stack from "react-bootstrap/Stack"
 import Button from "react-bootstrap/Button"
 import { createAdvert } from "../service";
+import { Navigate } from "react-router";
 
 function NewAdvert() {
     
@@ -22,6 +23,8 @@ function NewAdvert() {
     const [photo, setPhoto] = useState(null)
     
     const [disabled, setDisabled] = useState(true)
+    
+    const [advertId, setAdvertId] = useState(null)
     
     const { name, price, saling, lifestyle, motor, mobile, work} = advertInfo;
     
@@ -66,6 +69,11 @@ function NewAdvert() {
         
     }, [advertInfo]);
     
+    const handleCreateAdvert = async (formData) => {
+        const advert = await createAdvert(formData);
+        setAdvertId(advert.id)
+    }
+    
     const handleSubmit = (event) => {
         event.preventDefault();
         
@@ -85,12 +93,18 @@ function NewAdvert() {
         formData.append("photo", photo)
         }
        
-        createAdvert(formData);
+        handleCreateAdvert(formData);
+        
     } 
     
     const uploadImage = (event) => {
         setPhoto(event.target.files[0]);
     }
+    
+    if (advertId) {
+        console.log(advertId)
+    return <Navigate to={`/adverts${advertId}`}/>
+  }
     
     return <main>
         <Form onSubmit={handleSubmit}>

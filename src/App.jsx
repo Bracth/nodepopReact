@@ -30,7 +30,7 @@ function App({ isInitiallyLogged }) {
               <Route path="/" element={ <Navigate to="/adverts"/> }></Route>
              <Route path="/adverts" element={<RequireAuth><AdvertsPage /></RequireAuth>}></Route>
             <Route path="/adverts:id" element={<RequireAuth><AdvertDetail /></RequireAuth>}></Route>
-            <Route path="/newAdvert" element={<RequireAuth><NewAdvert/></RequireAuth>}></Route>
+            <Route path="/adverts/new" element={<RequireAuth><NewAdvert/></RequireAuth>}></Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage/> }/>
              <Route path="/404" element={<div> 404 | Not found Page</div>}></Route>

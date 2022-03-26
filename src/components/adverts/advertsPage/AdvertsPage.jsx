@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
 
 import Advert from "../Advert"
 import { getLastedsAdverts  } from "../service";
@@ -96,7 +97,10 @@ const handleGetAdverts = async () => {
                 </Link>
             </Col>
         }))
-            : <h1>There are not adverts</h1> }  
+                :<div>
+                    <h1>There are not adverts</h1>
+                         <Button variant="outline-primary" as={Link} to="/adverts/new">Create the first advert</Button>
+                </div>}  
         </Row>
     </main>
 }
