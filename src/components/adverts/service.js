@@ -74,3 +74,8 @@ export const createAdvert = async (advert) => {
     console.log(error.message);
   }
 };
+
+export const deleteAdvert = async (id) => {
+  const url = `${advertBaseUrl}/${id}`;
+  return client.delete(url);
+};
