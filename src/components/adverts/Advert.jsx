@@ -8,9 +8,10 @@ import { useState } from "react"
 
 import { deleteAdvert } from "./service"
 import Notification from "./notification/Notification"
+import img from "../../assets/defaultImgAdvert.jpg"
 
 function Advert({ props }) {
-    const { name, sale, price, tags, img } = props;
+    const { name, sale, price, tags, photo } = props;
     
     const { id } = useParams();
     
@@ -38,7 +39,7 @@ function Advert({ props }) {
     
     return <>{needConfirm? <Notification handleConfirmation={handleConfirmation}>Are you sure you want to delete this advert?</Notification>: null} 
         <Card>
-        <Card.Img variant="top" src={img} />
+        <Card.Img variant="top" src={!photo? img : photo}/>
         <Card.Body className="p-0">
             <Card.Title className="px-3 mt-2 text-center">{name}</Card.Title>
             <Card.Text className="px-3 mt-2"> 
