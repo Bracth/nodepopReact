@@ -5,6 +5,8 @@ import Button from "react-bootstrap/esm/Button";
 import { logout } from "../auth/service";
 import { useAuth } from "../auth/context";
 
+import "./header.css"
+
 function Header() {
     const { isLogged, handleLogout } = useAuth();
 
@@ -13,7 +15,7 @@ function Header() {
         handleLogout();
     }
     
-    return <header className="mb-3 mt-3">
+    return <header className="mb-3 mt-3 border-botton-5">
         <Container>
             <Stack direction="horizontal" gap={3}>
                 <Link to="/"><h2>Nodepop</h2></Link>

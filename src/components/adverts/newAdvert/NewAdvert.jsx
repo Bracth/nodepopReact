@@ -112,7 +112,7 @@ function NewAdvert() {
              </Form.Group>
             
             <Form.Group className="mb-3" controlId="formBasicNumber">
-                <Form.Control type="number" placeholder="Enter Advert Price" name="price" value={ price } onChange={ handleChange }/>
+                <Form.Control min={1} max={10000} type="number" placeholder="Enter Advert Price" name="price" value={ price } onChange={ handleChange }/>
             </Form.Group>
             
         <div key={`inline-radio`} className="mb-3">
