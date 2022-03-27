@@ -5,7 +5,8 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 
 import Advert from "../Advert"
-import { getLastedsAdverts  } from "../service";
+import { getLastedsAdverts } from "../service";
+import storage from "../../../utils/storage";
 import "./advertsPage.css"
 import AdvertsFilter from "./AdvertsFilter";
 import Spinner from "react-bootstrap/Spinner"

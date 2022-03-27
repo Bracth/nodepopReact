@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form"
 import Stack from "react-bootstrap/Stack"
+import storage from "../../../utils/storage";
 
 
 function AdvertsFilter({ handleFilter }) {
@@ -16,6 +17,9 @@ function AdvertsFilter({ handleFilter }) {
         work: false
     });
     
+    
+    const storageFilters = storage.get("filters");
+    
     const { name, sale, minPrice, maxPrice, lifestyle, motor, mobile, work } = filters;
     
     const handleChange = (event) => {
@@ -30,7 +34,16 @@ function AdvertsFilter({ handleFilter }) {
     
     useEffect(() => {
         handleFilter(filters)
+        storage.set("filters", filters)
     }, [filters]);
+    
+    useEffect(() => {
+        if (storageFilters) {
+            setFilters(storageFilters)
+            handleFilter(filters)
+        }
+    }, []);
+    
 
     return <Form >
             <Form.Group className="mb-3" controlId="formBasicEmail">
