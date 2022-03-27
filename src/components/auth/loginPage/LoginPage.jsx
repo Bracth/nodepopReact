@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button"
 
 import { useAuth } from "../context";
 import { login } from "../service";
+import ErrorAlert from "../../error/ErrorAlert";
 import { useLocation, useNavigate } from "react-router";
 
 function LoginPage() {
@@ -12,7 +13,7 @@ function LoginPage() {
     const location = useLocation();
     const navigate = useNavigate();
     
-    
+    const [error, setError] = useState(false);
     
     const [credentials, setCredentials] = useState({
         email: "",
@@ -35,16 +36,22 @@ function LoginPage() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await login(credentials);
+            const response = await login(credentials);
+            if (response.status === 401) {
+                setError(true)
+                return new Error("Invalid email or password")
+            }
             handleLogin();
             const from = location.state?.from?.pathname || "/";
             navigate(from, { replace: true });
         } catch (error) {
             console.log(error.message)
+            return error
         }
     }
     
     return <main>
+        {error? <ErrorAlert setError={setError}>Invalid email or password</ErrorAlert> : null} 
         <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                  <Form.Label>Email address</Form.Label>

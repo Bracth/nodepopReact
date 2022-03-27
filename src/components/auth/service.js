@@ -11,8 +11,10 @@ export const login = async ({ remember, ...credentials }) => {
     if (remember) {
       storage.set("auth", acessToken);
     }
+    return acessToken;
   } catch (error) {
     console.log(error.message);
+    return error;
   }
 };
 
