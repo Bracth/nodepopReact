@@ -6,9 +6,10 @@ import { useAuth } from "../context";
 import { login } from "../service";
 import ErrorAlert from "../../error/ErrorAlert";
 import { useLocation, useNavigate } from "react-router";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 function LoginPage() {
-    
+    const [isLoading, setIsLoading] = useState(false);
     const { handleLogin } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
@@ -36,7 +37,9 @@ function LoginPage() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            setIsLoading(true)
             const response = await login(credentials);
+            setIsLoading(false)
             if (response.status === 401) {
                 setError(true)
                 return new Error("Invalid email or password")
@@ -45,13 +48,15 @@ function LoginPage() {
             const from = location.state?.from?.pathname || "/";
             navigate(from, { replace: true });
         } catch (error) {
+            setIsLoading(false)
             console.log(error.message)
             return error
         }
     }
     
     return <main>
-        {error? <ErrorAlert setError={setError}>Invalid email or password</ErrorAlert> : null} 
+        {error ? <ErrorAlert setError={setError}>Invalid email or password</ErrorAlert> : null} 
+        {isLoading? <Spinner animation="border" variant="primary"/> : null}
         <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                  <Form.Label>Email address</Form.Label>

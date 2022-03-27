@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 
 import { getLastedAdvert } from "../service";
 import Advert from "../Advert";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 function AdvertDetail() {
+    const [isLoading, setIsLoading] = useState(false);
     const { id } = useParams(); 
     const [advert, setAdvert] = useState({
         name: "",
@@ -15,10 +17,13 @@ function AdvertDetail() {
     });
     
     const handleGetAdvert = async (id) => {
-    try {
+        try {
+        setIsLoading(true)
         const advert = await getLastedAdvert(id);
+        setIsLoading(false)
         setAdvert(advert)
-    } catch (error) {
+        } catch (error) {
+            setIsLoading(false)
         console.log(error.message)
     }
     }
@@ -28,7 +33,10 @@ function AdvertDetail() {
     }, []);
     
     
-    return <Advert props={advert}></Advert>
+    return <>
+        {isLoading? <Spinner animation="border" variant="primary"/> : null}
+        <Advert props={advert}></Advert>
+    </>
 }
 
 export default AdvertDetail;

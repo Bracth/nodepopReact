@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import Spinner from "react-bootstrap/esm/Spinner";
 import Form from "react-bootstrap/Form"
 import Stack from "react-bootstrap/Stack"
 import Button from "react-bootstrap/Button"
@@ -7,6 +8,8 @@ import { createAdvert } from "../service";
 import { Navigate } from "react-router";
 
 function NewAdvert() {
+    
+     const [isLoading, setIsLoading] = useState(false);
     
     const [advertInfo, setAdvertInfo] = useState({
         name: "",
@@ -70,8 +73,15 @@ function NewAdvert() {
     }, [advertInfo]);
     
     const handleCreateAdvert = async (formData) => {
+        try {
+        setIsLoading(true)
         const advert = await createAdvert(formData);
+        setIsLoading(false)
         setAdvertId(advert.id)
+        } catch (error) {
+            setIsLoading(false)
+            console.log(error.message)
+        }
     }
     
     const handleSubmit = (event) => {
@@ -167,6 +177,8 @@ function NewAdvert() {
             </Button>
             
         </Form>
+        
+        {isLoading? <Spinner animation="border" variant="primary"/> : null} 
         
     </main>
 }

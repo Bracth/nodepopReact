@@ -8,18 +8,23 @@ import Advert from "../Advert"
 import { getLastedsAdverts  } from "../service";
 import "./advertsPage.css"
 import AdvertsFilter from "./AdvertsFilter";
+import Spinner from "react-bootstrap/Spinner"
 
 
 function AdvertsPage() {
     const [filteredAdverts, setfilteredAdverts] = useState([]);
     const [adverts, setAdverts] = useState([])
+    const [isLoading, setIsLoading] = useState(false);
     
 const handleGetAdverts = async () => {
     try {
+        setIsLoading(true)
         const adverts = await getLastedsAdverts();
+        setIsLoading(false)
         setAdverts(adverts)
         setfilteredAdverts(adverts)
     } catch (error) {
+        setIsLoading(false)
         console.log(error.message)
     }
     }
@@ -106,7 +111,8 @@ const handleGetAdverts = async () => {
     }
     
     return <main>
-        <AdvertsFilter handleFilter={handleFilter}/>
+        <AdvertsFilter handleFilter={handleFilter} />
+        {isLoading? <Spinner animation="border" variant="primary"/> : null} 
         <Row xs={1} md={2} className="g-4">
         {adverts.length ? (filteredAdverts.map(filteredAdvert => {
             return <Col key={filteredAdvert.id}>
