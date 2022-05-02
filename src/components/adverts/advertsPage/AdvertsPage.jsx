@@ -32,6 +32,10 @@ const handleGetAdverts = async () => {
     
     useEffect(() => {
         handleGetAdverts();
+        const storageFilters = storage.get("filters")
+        if (storageFilters) {
+            handleFilter(storageFilters)
+        }
     }, []);
     
     const handleFilter = (filters) => {
@@ -111,13 +115,15 @@ const handleGetAdverts = async () => {
 
     }
     
+   
+    
     return <main>
         <AdvertsFilter handleFilter={handleFilter} />
         {isLoading? <Spinner animation="border" variant="primary"/> : null} 
         <Row xs={1} md={2} className="g-4">
         {adverts.length ? (filteredAdverts.map(filteredAdvert => {
             return <Col key={filteredAdvert.id}>
-                <Link id="advert-element" to={`/adverts${filteredAdvert.id}`}>
+                <Link id="advert-element" to={`/adverts/${filteredAdvert.id}`}>
                     <Advert props={filteredAdvert} />
                 </Link>
             </Col>
