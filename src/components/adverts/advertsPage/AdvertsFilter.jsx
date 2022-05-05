@@ -1,49 +1,21 @@
 import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form"
-import Stack from "react-bootstrap/Stack"
-import storage from "../../../utils/storage";
+
+import SelectTags from "../selectTags/SelectTags"
 
 
-function AdvertsFilter({ handleFilter }) {
-
-    const [filters, setFilters] = useState({
-        name: "",
-        sale: "all",
-        minPrice: 1,
-        maxPrice: 10000,
-        lifestyle: false,
-        motor: false,
-        mobile: false,
-        work: false
-    });
+function AdvertsFilter({ props}) {
     
-    
-    const storageFilters = storage.get("filters");
-    
-    const { name, sale, minPrice, maxPrice, lifestyle, motor, mobile, work } = filters;
+    const { filters, setFilters, selectTags, setSelectTags } = props
+        
+    const { name, sale, minPrice, maxPrice} = filters;
     
     const handleChange = (event) => {
         setFilters(filters => ({
             ...filters,
-            [event.target.name]:
-                event.target.type === "checkbox" ?
-                    event.target.checked
-                   : event.target.value
+            [event.target.name]: event.target.value
         }))
     }
-    
-    useEffect(() => {
-        handleFilter(filters)
-        storage.set("filters", filters)
-    }, [filters]);
-    
-    useEffect(() => {
-        if (storageFilters) {
-            setFilters(storageFilters)
-            handleFilter(filters)
-        }
-    }, []);
-    
 
     return <Form >
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -89,24 +61,7 @@ function AdvertsFilter({ handleFilter }) {
         <Form.Label>Max Price: { maxPrice }€</Form.Label>
         <Form.Range onChange={handleChange} value={maxPrice} min={minPrice} max={10000} name="maxPrice" />    
             
-            <Stack direction="horizontal" gap={3}>
-                <Form.Group className="mb-3" controlId="lifestyle">
-                    <Form.Check type="checkbox" label="lifestyle" name="lifestyle" value="lifestyle" checked={lifestyle} onChange={handleChange} inline/>
-            </Form.Group>
-            
-            <Form.Group className="mb-3" controlId="mobile">
-                <Form.Check type="checkbox" label="mobile" name="mobile" value="mobile" checked={mobile} onChange={handleChange} inline/>
-            </Form.Group>
-            
-            <Form.Group className="mb-3" controlId="work">
-                 <Form.Check type="checkbox" label="Work" name="work" value="work" checked={work} onChange={handleChange} inline/>
-            </Form.Group>
-            
-            <Form.Group className="mb-3" controlId="motor">
-                <Form.Check type="checkbox" label="motor" name="motor" value="motor" checked={motor} onChange={handleChange} inline/>
-            </Form.Group>
-            
-            </Stack>
+             <SelectTags props={{ selectTags, setSelectTags }}></SelectTags>
        
         </Form>
 }

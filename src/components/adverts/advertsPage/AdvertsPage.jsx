@@ -6,16 +6,22 @@ import Button from "react-bootstrap/Button"
 
 import Advert from "../Advert"
 import { getLastedsAdverts } from "../service";
-import storage from "../../../utils/storage";
 import "./advertsPage.css"
 import AdvertsFilter from "./AdvertsFilter";
 import Spinner from "react-bootstrap/Spinner"
+import { filterAdverts } from "./filtereAdverts";
 
 
 function AdvertsPage() {
-    const [filteredAdverts, setfilteredAdverts] = useState([]);
     const [adverts, setAdverts] = useState([])
+    const [selectTags, setSelectTags] = useState([])
     const [isLoading, setIsLoading] = useState(false);
+       const [filters, setFilters] = useState({
+        name: "",
+        sale: "all",
+        minPrice: 1,
+        maxPrice: 10000,
+    });
     
 const handleGetAdverts = async () => {
     try {
@@ -23,7 +29,6 @@ const handleGetAdverts = async () => {
         const adverts = await getLastedsAdverts();
         setIsLoading(false)
         setAdverts(adverts)
-        setfilteredAdverts(adverts)
     } catch (error) {
         setIsLoading(false)
         console.log(error.message)
@@ -32,99 +37,18 @@ const handleGetAdverts = async () => {
     
     useEffect(() => {
         handleGetAdverts();
-        const storageFilters = storage.get("filters")
-        if (storageFilters) {
-            handleFilter(storageFilters)
-        }
     }, []);
-    
-    const handleFilter = (filters) => {
-        let tagFilter = null
-        
-        const result = adverts.filter(advert => {
-           return advert.name.toLowerCase().includes(filters.name.toLowerCase())
-        })
-        
-        const result2 = result.filter(advert => {
-            if (filters.sale === "sale") {
-                return advert.sale;
-            } else if (filters.sale === "buy") {
-                return !advert.sale;
-            } else {
-                return advert;
-            }
-        })
-        
-        const result3 = result2.filter(advert => {
-            if (advert.price >= filters.minPrice) {
-                return advert
-            }
-        })
-        
-         const result4 = result3.filter(advert => {
-            if (advert.price <= filters.maxPrice) {
-                return advert
-            }
-         })
-        
-         if (filters.lifestyle === true) {
-            tagFilter = "lifestyle";
-        }
-        
-        const result5 = result4.filter(advert => {
-            if (tagFilter) {
-                return advert.tags.includes(tagFilter)
-            }
-            return true
-        })
-        
-         if (filters.mobile === true) {
-            tagFilter = "mobile";
-        }
-        
-        const result6 = result5.filter(advert => {
-            if (tagFilter) {
-                return advert.tags.includes(tagFilter)
-            }
-            return true
-        })
-        
-        if (filters.motor === true) {
-            tagFilter = "motor";
-        }
-        
-        const result7 = result6.filter(advert => {
-            if (tagFilter) {
-                return advert.tags.includes(tagFilter)
-            }
-            return true
-        })
-        
-        if (filters.work === true) {
-            tagFilter = "work";
-        }
-        
-        const result8 = result7.filter(advert => {
-            if (tagFilter) {
-                return advert.tags.includes(tagFilter)
-            }
-            return true
-        })
-        
-        setfilteredAdverts(result8)
-
-    }
-    
    
+    const filteredAdverts = filterAdverts(adverts, filters, selectTags);
     
     return <main>
-        <AdvertsFilter handleFilter={handleFilter} />
+        <AdvertsFilter props={{filters, setFilters, selectTags, setSelectTags}}  />
         {isLoading? <Spinner animation="border" variant="primary"/> : null} 
         <Row xs={1} md={2} className="g-4">
-        {adverts.length ? (filteredAdverts.map(filteredAdvert => {
-            return <Col key={filteredAdvert.id}>
-                <Link id="advert-element" to={`/adverts/${filteredAdvert.id}`}>
-                    <Advert props={filteredAdvert} />
+        {adverts.length ? (filteredAdverts.map(advert => {
+            return <Col key={advert.id}>
+                <Link id="advert-element" to={`/adverts/${advert.id}`}>
+                    <Advert props={advert} />
                 </Link>
             </Col>
         }))
