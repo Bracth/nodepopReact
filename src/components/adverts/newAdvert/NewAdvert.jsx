@@ -21,8 +21,6 @@ function NewAdvert() {
     
     const [photo, setPhoto] = useState(null)
     
-    const [disabled, setDisabled] = useState(true)
-    
     const [advertId, setAdvertId] = useState(null)
     
     const { name, price, saling } = advertInfo;
@@ -120,7 +118,7 @@ function NewAdvert() {
                 <Form.Control type="file" onChange={uploadImage} name="photo"/>
             </Form.Group>
             
-            <Button variant="primary" type="submit" disabled={selectTags.length > 0 && name && price ? false : disabled}>
+            <Button variant="primary" type="submit" disabled={selectTags.length > 0 && name && price ? false : true}>
                  Submit
             </Button>
             
