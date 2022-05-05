@@ -4,17 +4,13 @@ import { useState, useEffect } from "react";
 import { getLastedAdvert } from "../service";
 import Advert from "../Advert";
 import Spinner from "react-bootstrap/esm/Spinner";
+import ErrorAlert from "../../error/ErrorAlert";
 
 function AdvertDetail() {
     const [isLoading, setIsLoading] = useState(false);
     const { id } = useParams(); 
-    const [advert, setAdvert] = useState({
-        name: "",
-            price: 0,
-        sale: true,
-        tags: [],
-        photo: null
-    });
+    const [advert, setAdvert] = useState(null);
+    const [error, setError] = useState(false);
     
     const handleGetAdvert = async (id) => {
         try {
@@ -24,18 +20,20 @@ function AdvertDetail() {
         setAdvert(advert)
         } catch (error) {
             setIsLoading(false)
-        console.log(error.message)
+            console.log(error.message)
+            setError(true);
     }
     }
     
     useEffect(() => {
      handleGetAdvert(id);
-    }, []);
+    }, [id]);
     
     
     return <>
-        {isLoading? <Spinner animation="border" variant="primary"/> : null}
-        <Advert props={advert}></Advert>
+        {isLoading ? <Spinner animation="border" variant="primary" /> : null}
+        {error? <ErrorAlert setError={setError}>Advert not found</ErrorAlert> : null}
+        {advert? <Advert props={advert}></Advert> : null}
     </>
 }
 

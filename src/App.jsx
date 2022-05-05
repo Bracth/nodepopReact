@@ -27,8 +27,8 @@ function App({ isInitiallyLogged }) {
       <AuthContextProvider value={{ isLogged, handleLogin, handleLogout }}>
         <Routes>
           <Route path="/" element={<Layout />}>
-              <Route path="/" element={ <Navigate to="/adverts"/> }></Route>
-             <Route path="/adverts" element={<RequireAuth><AdvertsPage /></RequireAuth>}></Route>
+            <Route path="/" element={<Navigate to="/adverts" />}></Route>
+            <Route path="/adverts" element={<RequireAuth><AdvertsPage></AdvertsPage></RequireAuth>}></Route>
             <Route path="/adverts/:id" element={<RequireAuth><AdvertDetail /></RequireAuth>}></Route>
             <Route path="/adverts/new" element={<RequireAuth><NewAdvert/></RequireAuth>}></Route>
             <Route path="/login" element={<LoginPage />} />
