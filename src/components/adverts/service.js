@@ -79,3 +79,8 @@ export const deleteAdvert = async (id) => {
   const url = `${advertBaseUrl}/${id}`;
   return client.delete(url);
 };
+
+export const getTags = async () => {
+  const url = `${advertBaseUrl}/tags`;
+  return client.get(url);
+};

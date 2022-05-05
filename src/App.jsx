@@ -9,6 +9,7 @@ import AdvertDetail from "./components/adverts/advertDetail/AdvertDetail";
 import RequireAuth from "./components/auth/RequireAuth";
 import RegisterPage from "./components/auth/registerPage/RegisterPage";
 import NewAdvert from "./components/adverts/newAdvert/NewAdvert";
+import SelectTags from "./components/adverts/selectTags/SelectTags";
 
 function App({ isInitiallyLogged }) {
 
@@ -30,7 +31,8 @@ function App({ isInitiallyLogged }) {
             <Route path="/" element={<Navigate to="/adverts" />}></Route>
             <Route path="/adverts" element={<RequireAuth><AdvertsPage></AdvertsPage></RequireAuth>}></Route>
             <Route path="/adverts/:id" element={<RequireAuth><AdvertDetail /></RequireAuth>}></Route>
-            <Route path="/adverts/new" element={<RequireAuth><NewAdvert/></RequireAuth>}></Route>
+            <Route path="/adverts/new" element={<RequireAuth><NewAdvert /></RequireAuth>}></Route>
+            <Route path="/test" element={<SelectTags></SelectTags>}></Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage/> }/>
              <Route path="/404" element={<div> 404 | Not found Page</div>}></Route>

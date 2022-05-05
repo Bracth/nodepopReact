@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 
 import Spinner from "react-bootstrap/esm/Spinner";
 import Form from "react-bootstrap/Form"
-import Stack from "react-bootstrap/Stack"
 import Button from "react-bootstrap/Button"
 import { createAdvert } from "../service";
 import { Navigate } from "react-router";
+import SelectTags from "../selectTags/SelectTags";
 
 function NewAdvert() {
+    
+    const [selectTags, setSelectTags] = useState([]);
     
      const [isLoading, setIsLoading] = useState(false);
     
@@ -15,13 +17,7 @@ function NewAdvert() {
         name: "",
         price: 1,
         saling: "sale",
-        lifestyle: false,
-        motor: false,
-        mobile: false,
-        work: false,
     });
-    
-    const [tags, setTags] = useState([])
     
     const [photo, setPhoto] = useState(null)
     
@@ -29,48 +25,15 @@ function NewAdvert() {
     
     const [advertId, setAdvertId] = useState(null)
     
-    const { name, price, saling, lifestyle, motor, mobile, work} = advertInfo;
+    const { name, price, saling } = advertInfo;
     
     const handleChange = (event) => {
         setAdvertInfo(advertInfo => ({
             ...advertInfo,
-            [event.target.name]:
-                event.target.type === "checkbox" ?
-                    event.target.checked
-                   : event.target.value
+            [event.target.name]: event.target.value
         }))
     }
     
-    useEffect(() => { 
-        
-        const filterTags = [];
-        
-        if (motor === true) {
-            filterTags.push("motor");
-        }
-         if (mobile === true) {
-            filterTags.push("mobile");
-        }
-         if (lifestyle === true) {
-            filterTags.push("lifestyle");
-        }
-         if (work === true) {
-            filterTags.push("work");
-        }
-        
-        if (name) {
-            if (filterTags.length > 0) {
-                setDisabled(false)
-            } else {
-                setDisabled(true)
-            }
-        } else {
-            setDisabled(true)
-        }
-        
-        setTags(filterTags);
-        
-    }, [advertInfo]);
     
     const handleCreateAdvert = async (formData) => {
         try {
@@ -93,12 +56,14 @@ function NewAdvert() {
             sale = false
         }
         
+        
+        
         const formData = new FormData()
         
         formData.append("name", name)
         formData.append("price", price)
         formData.append("sale", sale)
-        formData.append("tags", tags)
+        formData.append("tags", selectTags)
         if (photo) {
         formData.append("photo", photo)
         }
@@ -112,7 +77,7 @@ function NewAdvert() {
     }
     
     if (advertId) {
-    return <Navigate to={`/adverts${advertId}`}/>
+    return <Navigate to={`/adverts/${advertId}`}/>
   }
     
     return <main>
@@ -148,31 +113,14 @@ function NewAdvert() {
                 />
             </div>
             
-        <Stack direction="horizontal" className="mt-2" gap={3}>
-            <Form.Group className="mb-3" controlId="lifestyle">
-                <Form.Check type="checkbox" label="lifestyle" name="lifestyle" value="lifestyle" checked={lifestyle} onChange={ handleChange } inline/>
-            </Form.Group>
-            
-            <Form.Group className="mb-3" controlId="mobile">
-                <Form.Check type="checkbox" label="mobile" name="mobile" value="mobile" checked={mobile} onChange={ handleChange } inline/>
-            </Form.Group>
-            
-            <Form.Group className="mb-3" controlId="work">
-                <Form.Check type="checkbox" label="Work" name="work" value="work" checked={work} onChange={ handleChange } inline/>
-            </Form.Group>
-            
-            <Form.Group className="mb-3" controlId="motor">
-                <Form.Check type="checkbox" label="motor" name="motor" value="motor" checked={motor} onChange={ handleChange } inline/>
-            </Form.Group>
-            
-            </Stack>
+            <SelectTags props={{ selectTags, setSelectTags }}></SelectTags>
             
             <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>Select an Image for the advert</Form.Label>
                 <Form.Control type="file" onChange={uploadImage} name="photo"/>
             </Form.Group>
             
-            <Button variant="primary" type="submit" disabled={disabled}>
+            <Button variant="primary" type="submit" disabled={selectTags.length > 0 && name && price ? false : disabled}>
                  Submit
             </Button>
             
