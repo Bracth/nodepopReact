@@ -45,7 +45,7 @@ const handleGetAdverts = async () => {
         <AdvertsFilter props={{filters, setFilters, selectTags, setSelectTags}}  />
         {isLoading? <Spinner animation="border" variant="primary"/> : null} 
         <Row xs={1} md={2} className="g-4">
-        {adverts.length ? (filteredAdverts.map(advert => {
+        {adverts.length && filteredAdverts.length ? (filteredAdverts.map(advert => {
             return <Col key={advert.id}>
                 <Link id="advert-element" to={`/adverts/${advert.id}`}>
                     <Advert props={advert} />
