@@ -1,17 +1,16 @@
-import { Outlet } from "react-router"
-import  Container  from "react-bootstrap/Container"
+import Container from "react-bootstrap/Container";
 
-import Header from "./Header"
-import Footer from "./Footer"
+import Header from "./Header";
+import Footer from "./Footer";
 
-function Layout() {
-    return <>
-        <Header></Header>
-        <Container>
-            <Outlet />
-        </Container>
-        <Footer></Footer>
+function Layout({ children }) {
+  return (
+    <>
+      <Header></Header>
+      <Container>{children}</Container>
+      <Footer></Footer>
     </>
+  );
 }
 
 export default Layout;
