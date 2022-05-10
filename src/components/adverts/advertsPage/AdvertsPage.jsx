@@ -10,9 +10,12 @@ import "./advertsPage.css";
 import AdvertsFilter from "./AdvertsFilter";
 import Spinner from "react-bootstrap/Spinner";
 import { filterAdverts } from "./filtereAdverts";
+import { advertsLoaded } from "../../../store/actions";
+import { useDispatch } from "react-redux";
+import { getAdverts } from "../../../store/selectors";
+import { useSelector } from "react-redux";
 
 function AdvertsPage() {
-  const [adverts, setAdverts] = useState([]);
   const [selectTags, setSelectTags] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
@@ -21,13 +24,14 @@ function AdvertsPage() {
     minPrice: 1,
     maxPrice: 10000,
   });
+  const dispatch = useDispatch();
 
   const handleGetAdverts = async () => {
     try {
       setIsLoading(true);
       const adverts = await getLastedsAdverts();
       setIsLoading(false);
-      setAdverts(adverts);
+      dispatch(advertsLoaded(adverts));
     } catch (error) {
       setIsLoading(false);
       console.log(error.message);
@@ -36,7 +40,9 @@ function AdvertsPage() {
 
   useEffect(() => {
     handleGetAdverts();
-  }, []);
+  });
+
+  const adverts = useSelector(getAdverts);
 
   const filteredAdverts = filterAdverts(adverts, filters, selectTags);
 

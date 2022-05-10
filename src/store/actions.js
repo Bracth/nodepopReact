@@ -12,4 +12,7 @@ export const authLogoutSucces = () => ({
   type: AUTH_LOGOUT_SUCCESS,
 });
 
-export const advertsLoaded = () => ({ type: ADVERTS_LOADED });
+export const advertsLoaded = (adverts) => ({
+  type: ADVERTS_LOADED,
+  payload: adverts,
+});
