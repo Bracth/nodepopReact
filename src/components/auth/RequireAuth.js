@@ -1,8 +1,9 @@
 import { Navigate, useLocation } from "react-router";
-import { useAuth } from "./context";
+import { getIsLogged } from "../../store/selectors";
+import { useSelector } from "react-redux";
 
 function RequireAuth({ children }) {
-  const { isLogged } = useAuth();
+  const isLogged = useSelector(getIsLogged);
   const location = useLocation();
 
   if (!isLogged) {
