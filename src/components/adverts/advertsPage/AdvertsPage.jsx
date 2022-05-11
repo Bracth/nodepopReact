@@ -40,7 +40,7 @@ function AdvertsPage() {
 
   useEffect(() => {
     handleGetAdverts();
-  });
+  }, []);
 
   const adverts = useSelector(getAdverts);
 
