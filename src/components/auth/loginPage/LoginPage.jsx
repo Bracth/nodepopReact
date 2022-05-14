@@ -2,21 +2,16 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import { useAuth } from "../context";
-import { login } from "../service";
 import ErrorAlert from "../../error/ErrorAlert";
 import { useLocation, useNavigate } from "react-router";
 import Spinner from "react-bootstrap/esm/Spinner";
-import { useDispatch } from "react-redux";
-import { authLoginSuccess } from "../../../store/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { authLogin } from "../../../store/actions";
+import { getUi } from "../../../store/selectors";
 
 function LoginPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const { handleLogin } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [error, setError] = useState(false);
 
   const [credentials, setCredentials] = useState({
     email: "",
@@ -27,6 +22,7 @@ function LoginPage() {
   const { email, password, remember } = credentials;
 
   const dispatch = useDispatch();
+  const { isLoading, error } = useSelector(getUi);
 
   const handleChange = (event) => {
     setCredentials((credentials) => ({
@@ -40,30 +36,15 @@ function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      setIsLoading(true);
-      const response = await login(credentials);
-      setIsLoading(false);
-      if (response.status === 401) {
-        setError(true);
-        return new Error("Invalid email or password");
-      }
-      handleLogin();
-      dispatch(authLoginSuccess());
-      const from = location.state?.from?.pathname || "/";
-      navigate(from, { replace: true });
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error.message);
-      return error;
-    }
+    debugger;
+    dispatch(authLogin(credentials));
+    // const from = location.state?.from?.pathname || "/";
+    // navigate(from, { replace: true });
   };
 
   return (
     <main>
-      {error ? (
-        <ErrorAlert setError={setError}>Invalid email or password</ErrorAlert>
-      ) : null}
+      {error ? <ErrorAlert>{error.message}</ErrorAlert> : null}
       {isLoading ? <Spinner animation="border" variant="primary" /> : null}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">

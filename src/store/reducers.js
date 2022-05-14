@@ -4,6 +4,7 @@ import {
   AUTH_LOGIN_REQUEST,
   AUTH_LOGIN_SUCCESS,
   AUTH_LOGOUT_SUCCESS,
+  UI_RESET_ERROR,
 } from "./types";
 
 export const defaulState = {
@@ -43,6 +44,8 @@ export const ui = (state = defaulState.ui, action) => {
       return { ...state, isLoadig: false };
     case AUTH_LOGIN_FAILURE:
       return { ...state, isLoadig: false, error: action.payload };
+    case UI_RESET_ERROR:
+      return { ...state, error: null };
     default:
       return state;
   }
