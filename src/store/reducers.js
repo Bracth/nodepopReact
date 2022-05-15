@@ -1,5 +1,7 @@
 import {
-  ADVERTS_LOADED,
+  ADVERTS_LOADED_REQUEST,
+  ADVERTS_LOADED_SUCCESS,
+  ADVERTS_LOADED_FAILURE,
   AUTH_LOGIN_FAILURE,
   AUTH_LOGIN_REQUEST,
   AUTH_LOGIN_SUCCESS,
@@ -29,7 +31,7 @@ export const auth = (state = defaulState.auth, action) => {
 
 export const adverts = (state = defaulState.adverts, action) => {
   switch (action.type) {
-    case ADVERTS_LOADED:
+    case ADVERTS_LOADED_SUCCESS:
       return action.payload;
     default:
       return state;
@@ -39,10 +41,13 @@ export const adverts = (state = defaulState.adverts, action) => {
 export const ui = (state = defaulState.ui, action) => {
   switch (action.type) {
     case AUTH_LOGIN_REQUEST:
+    case ADVERTS_LOADED_REQUEST:
       return { ...state, isLoadig: true, error: null };
     case AUTH_LOGIN_SUCCESS:
+    case ADVERTS_LOADED_SUCCESS:
       return { ...state, isLoadig: false };
     case AUTH_LOGIN_FAILURE:
+    case ADVERTS_LOADED_FAILURE:
       return { ...state, isLoadig: false, error: action.payload };
     case UI_RESET_ERROR:
       return { ...state, error: null };

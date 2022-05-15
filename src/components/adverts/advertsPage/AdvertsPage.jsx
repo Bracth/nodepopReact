@@ -26,21 +26,9 @@ function AdvertsPage() {
   });
   const dispatch = useDispatch();
 
-  const handleGetAdverts = async () => {
-    try {
-      setIsLoading(true);
-      const adverts = await getLastedsAdverts();
-      setIsLoading(false);
-      dispatch(advertsLoaded(adverts));
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error.message);
-    }
-  };
-
   useEffect(() => {
-    handleGetAdverts();
-  }, []);
+    dispatch(advertsLoaded());
+  }, [dispatch]);
 
   const adverts = useSelector(getAdverts);
 
