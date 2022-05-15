@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/esm/Button";
-import { logout } from "../auth/service";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,7 +19,6 @@ function Header() {
 
   const handleConfirmation = async (sure) => {
     if (sure) {
-      await logout();
       setNeedconfirm(false);
       dispatch(authLogoutSucces());
     } else {

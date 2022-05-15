@@ -1,7 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import * as reducers from "./reducers";
+import * as auth from "../components/auth/service";
+import * as adverts from "../components/adverts/service";
 import thunk from "redux-thunk";
+
+const api = { auth, adverts };
+console.log(api);
 
 const logger = (store) => (next) => (action) => {
   console.log("Before action", action, store.getState());
@@ -22,7 +27,7 @@ const timestamp = () => (next) => (action) => {
 };
 
 const configureStore = (preloadedState) => {
-  const middlewares = [thunk, timestamp, logger];
+  const middlewares = [thunk.withExtraArgument({ api }), timestamp, logger];
 
   const store = createStore(
     combineReducers(reducers),

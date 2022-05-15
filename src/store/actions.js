@@ -1,5 +1,3 @@
-import { login } from "../components/auth/service";
-
 import {
   ADVERTS_LOADED,
   AUTH_LOGIN_FAILURE,
@@ -24,10 +22,10 @@ export const authLoginFailure = (error) => ({
 });
 
 export const authLogin = (credentials) => {
-  return async function (dispatch, _getState) {
+  return async function (dispatch, _getState, { api }) {
     try {
       dispatch(authLoginRequest());
-      const response = await login(credentials);
+      const response = await api.auth.login(credentials);
       if (response.status === 401) {
         throw new Error("Invalid email or password");
       }
@@ -41,6 +39,18 @@ export const authLogin = (credentials) => {
 export const authLogoutSucces = () => ({
   type: AUTH_LOGOUT_SUCCESS,
 });
+
+export const authLogout = () => {
+  return async function (dispatch, _getState, { api }) {
+    try {
+      const response = await api.auth.logout();
+      dispatch(authLoginSuccess());
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 export const advertsLoaded = (adverts) => ({
   type: ADVERTS_LOADED,

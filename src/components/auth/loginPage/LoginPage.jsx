@@ -36,7 +36,6 @@ function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    debugger;
     dispatch(authLogin(credentials));
     // const from = location.state?.from?.pathname || "/";
     // navigate(from, { replace: true });
