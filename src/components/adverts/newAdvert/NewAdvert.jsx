@@ -3,7 +3,6 @@ import { useState } from "react";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { createAdvert } from "../service";
 import { Navigate } from "react-router";
 import SelectTags from "../selectTags/SelectTags";
 import { useDispatch } from "react-redux";
@@ -38,7 +37,6 @@ function NewAdvert() {
   const handleCreateAdvert = async (formData) => {
     try {
       const advert = await dispatch(advertCreated(formData));
-
       setAdvertId(advert.id);
     } catch (error) {
       console.log(error.message);
