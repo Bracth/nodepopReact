@@ -23,7 +23,10 @@ export const defaulState = {
   adverts: {
     isLoaded: false,
     data: [],
-    tags: [],
+  },
+  tags: {
+    isLoaded: false,
+    data: [],
   },
   ui: {
     isLoading: false,
@@ -48,8 +51,15 @@ export const adverts = (state = defaulState.adverts, action) => {
       return { ...state, isLoaded: true, data: action.payload };
     case ADVERT_LOADED_SUCCESS:
       return { ...state, data: [...state.data, action.payload] };
+    default:
+      return state;
+  }
+};
+
+export const tags = (state = defaulState.tags, action) => {
+  switch (action.type) {
     case ADVERT_TAGS_LOADED_SUCCESS:
-      return { ...state, tags: action.payload };
+      return { isLoaded: true, data: action.payload };
     default:
       return state;
   }

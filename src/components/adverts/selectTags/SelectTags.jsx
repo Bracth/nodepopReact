@@ -6,8 +6,7 @@ import { advertTagsLoaded } from "../../../store/actions";
 import { getTags } from "../../../store/selectors";
 
 function SelectTags({ props }) {
-  const { selectTags } = props;
-  const { setSelectTags } = props;
+  const { selectTags, setSelectTags } = props;
 
   const dispatch = useDispatch();
 

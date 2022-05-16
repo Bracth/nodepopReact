@@ -1,4 +1,4 @@
-import { getAdvert, getDavertsIsLoaded } from "./selectors";
+import { getAdvert, getDavertsIsLoaded, getTagsIsLoaded } from "./selectors";
 import {
   ADVERTS_LOADED_FAILURE,
   ADVERTS_LOADED_REQUEST,
@@ -137,6 +137,8 @@ export const advertTagsLoadedFailure = (error) => ({
 
 export const advertTagsLoaded = () => {
   return async function (dispatch, getState, { api }) {
+    const tagsIsLoaded = getTagsIsLoaded(getState());
+    if (tagsIsLoaded) return;
     try {
       dispatch(advertTagsLoadedRequest());
       const tags = await api.adverts.getTags();
