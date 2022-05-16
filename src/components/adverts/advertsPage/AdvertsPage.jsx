@@ -5,19 +5,17 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 import Advert from "../Advert";
-import { getLastedsAdverts } from "../service";
 import "./advertsPage.css";
 import AdvertsFilter from "./AdvertsFilter";
 import Spinner from "react-bootstrap/Spinner";
 import { filterAdverts } from "./filtereAdverts";
 import { advertsLoaded } from "../../../store/actions";
 import { useDispatch } from "react-redux";
-import { getAdverts } from "../../../store/selectors";
+import { getAdverts, getUi } from "../../../store/selectors";
 import { useSelector } from "react-redux";
 
 function AdvertsPage() {
   const [selectTags, setSelectTags] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     name: "",
     sale: "all",
@@ -33,6 +31,8 @@ function AdvertsPage() {
   const adverts = useSelector(getAdverts);
 
   const filteredAdverts = filterAdverts(adverts, filters, selectTags);
+
+  const { isLoading } = useSelector(getUi);
 
   return (
     <main>

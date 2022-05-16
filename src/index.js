@@ -13,7 +13,7 @@ if (acessToken) {
   setAuthorizationHeader(acessToken);
 }
 
-const store = configureStore({ auth: !!acessToken, adverts: [] });
+const store = configureStore({ auth: !!acessToken });
 
 ReactDOM.render(
   <React.StrictMode>

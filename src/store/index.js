@@ -6,7 +6,6 @@ import * as adverts from "../components/adverts/service";
 import thunk from "redux-thunk";
 
 const api = { auth, adverts };
-console.log(api);
 
 const logger = (store) => (next) => (action) => {
   console.log("Before action", action, store.getState());

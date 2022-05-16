@@ -1,3 +1,4 @@
+import { getDavertsIsLoaded } from "./selectors";
 import {
   ADVERTS_LOADED_FAILURE,
   ADVERTS_LOADED_REQUEST,
@@ -70,7 +71,9 @@ export const advertsLoadedFailure = (error) => ({
 });
 
 export const advertsLoaded = () => {
-  return async function (dispatch, _getState, { api }) {
+  return async function (dispatch, getState, { api }) {
+    const areAdvertsLoaded = getDavertsIsLoaded(getState());
+    if (areAdvertsLoaded) return;
     try {
       dispatch(advertsLoadedRequest());
       const adverts = await api.adverts.getLastedsAdverts();

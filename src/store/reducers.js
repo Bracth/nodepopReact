@@ -11,9 +11,12 @@ import {
 
 export const defaulState = {
   auth: true,
-  adverts: [],
+  adverts: {
+    isLoaded: false,
+    data: [],
+  },
   ui: {
-    isLoadig: false,
+    isLoading: false,
     error: null,
   },
 };
@@ -32,7 +35,7 @@ export const auth = (state = defaulState.auth, action) => {
 export const adverts = (state = defaulState.adverts, action) => {
   switch (action.type) {
     case ADVERTS_LOADED_SUCCESS:
-      return action.payload;
+      return { isLoaded: true, data: action.payload };
     default:
       return state;
   }
@@ -42,13 +45,13 @@ export const ui = (state = defaulState.ui, action) => {
   switch (action.type) {
     case AUTH_LOGIN_REQUEST:
     case ADVERTS_LOADED_REQUEST:
-      return { ...state, isLoadig: true, error: null };
+      return { ...state, isLoading: true, error: null };
     case AUTH_LOGIN_SUCCESS:
     case ADVERTS_LOADED_SUCCESS:
-      return { ...state, isLoadig: false };
+      return { ...state, isLoading: false };
     case AUTH_LOGIN_FAILURE:
     case ADVERTS_LOADED_FAILURE:
-      return { ...state, isLoadig: false, error: action.payload };
+      return { ...state, isLoading: false, error: action.payload };
     case UI_RESET_ERROR:
       return { ...state, error: null };
     default:
