@@ -17,7 +17,7 @@ export const createAdvert = async (advert) => {
   try {
     return await client.post(url, advert);
   } catch (error) {
-    console.log(error.message);
+    throw new Error(error);
   }
 };
 

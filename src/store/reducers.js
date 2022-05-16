@@ -13,6 +13,9 @@ import {
   ADVERT_CREATED_SUCCESS,
   ADVERT_LOADED_FAILURE,
   ADVERT_CREATED_FAILURE,
+  ADVERT_TAGS_LOADED_REQUEST,
+  ADVERT_TAGS_LOADED_SUCCESS,
+  ADVERT_TAGS_LOADED_FAILURE,
 } from "./types";
 
 export const defaulState = {
@@ -20,6 +23,7 @@ export const defaulState = {
   adverts: {
     isLoaded: false,
     data: [],
+    tags: [],
   },
   ui: {
     isLoading: false,
@@ -41,9 +45,11 @@ export const auth = (state = defaulState.auth, action) => {
 export const adverts = (state = defaulState.adverts, action) => {
   switch (action.type) {
     case ADVERTS_LOADED_SUCCESS:
-      return { isLoaded: true, data: action.payload };
+      return { ...state, isLoaded: true, data: action.payload };
     case ADVERT_LOADED_SUCCESS:
       return { ...state, data: [...state.data, action.payload] };
+    case ADVERT_TAGS_LOADED_SUCCESS:
+      return { ...state, tags: action.payload };
     default:
       return state;
   }
@@ -55,16 +61,19 @@ export const ui = (state = defaulState.ui, action) => {
     case ADVERTS_LOADED_REQUEST:
     case ADVERT_LOADED_REQUEST:
     case ADVERT_CREATED_REQUEST:
+    case ADVERT_TAGS_LOADED_REQUEST:
       return { ...state, isLoading: true, error: null };
     case AUTH_LOGIN_SUCCESS:
     case ADVERTS_LOADED_SUCCESS:
     case ADVERT_LOADED_SUCCESS:
     case ADVERT_CREATED_SUCCESS:
+    case ADVERT_TAGS_LOADED_SUCCESS:
       return { ...state, isLoading: false };
     case AUTH_LOGIN_FAILURE:
     case ADVERTS_LOADED_FAILURE:
     case ADVERT_LOADED_FAILURE:
     case ADVERT_CREATED_FAILURE:
+    case ADVERT_TAGS_LOADED_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
     case UI_RESET_ERROR:
       return { ...state, error: null };

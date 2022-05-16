@@ -5,15 +5,16 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Navigate } from "react-router";
 import SelectTags from "../selectTags/SelectTags";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { advertCreated } from "../../../store/actions";
+import { getUi } from "../../../store/selectors";
+import ErrorAlert from "../../error/ErrorAlert";
 
 function NewAdvert() {
   const dispatch = useDispatch();
+  const { isLoading, error } = useSelector(getUi);
 
   const [selectTags, setSelectTags] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const [advertInfo, setAdvertInfo] = useState({
     name: "",
@@ -137,7 +138,8 @@ function NewAdvert() {
         </Button>
       </Form>
 
-      {isLoading ? <Spinner animation="border" variant="primary" /> : null}
+      {isLoading && <Spinner animation="border" variant="primary" />}
+      {error && <ErrorAlert>Advert Can't be created</ErrorAlert>}
     </main>
   );
 }

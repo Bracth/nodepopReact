@@ -7,4 +7,6 @@ export const getDavertsIsLoaded = (state) => state.adverts.isLoaded;
 export const getAdvert = (advertId) => (state) =>
   state.adverts.data.find((advert) => advert.id === advertId);
 
+export const getTags = (state) => state.adverts.tags;
+
 export const getUi = (state) => state.ui;
