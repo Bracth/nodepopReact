@@ -6,9 +6,10 @@ import Col from "react-bootstrap/Col";
 import { Navigate, useParams } from "react-router";
 import { useState } from "react";
 
-import { deleteAdvert } from "./service";
 import Notification from "./notification/Notification";
 import img from "../../assets/defaultImgAdvert.jpg";
+import { useDispatch } from "react-redux";
+import { advertDeleted } from "../../store/actions";
 
 function Advert({ props }) {
   const { name, sale, price, tags, photo } = props;
@@ -17,18 +18,20 @@ function Advert({ props }) {
 
   const [needConfirm, setNeedConfirm] = useState(null);
 
-  const [advertDeleted, setAdvertDeleted] = useState(null);
+  const [isAdvertDeleted, setIsAdvertDeleted] = useState(null);
+
+  const dispatch = useDispatch();
 
   const handleConfirmation = (sure) => {
     if (sure) {
-      deleteAdvert(id);
-      setAdvertDeleted(true);
+      dispatch(advertDeleted(id));
+      setIsAdvertDeleted(true);
     } else {
       setNeedConfirm(false);
     }
   };
 
-  if (advertDeleted) {
+  if (isAdvertDeleted) {
     return <Navigate to="/" />;
   }
 
