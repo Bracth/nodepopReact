@@ -93,14 +93,26 @@ export const advertLoadedSuccess = (advert) => ({
   payload: advert,
 });
 
+export const advertLoadedRequest = () => ({
+  type: ADVERT_LOADED_REQUEST,
+});
+
+export const advertLoadedFailure = (error) => ({
+  type: ADVERT_LOADED_FAILURE,
+  payload: error,
+});
+
 export const advertLoaded = (advertId) => {
   return async function (dispatch, getState, { api }) {
     const advertLoaded = getAdvert(advertId)(getState());
     if (advertLoaded) return;
     try {
+      dispatch(advertLoadedRequest());
       const advert = await api.adverts.getLastedAdvert(advertId);
       dispatch(advertLoadedSuccess(advert));
-    } catch (error) {}
+    } catch (error) {
+      dispatch(advertLoadedFailure(error));
+    }
   };
 };
 
