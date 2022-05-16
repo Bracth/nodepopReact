@@ -4,7 +4,7 @@ export const getAdverts = (state) => state.adverts.data;
 
 export const getDavertsIsLoaded = (state) => state.adverts.isLoaded;
 
-export const getAdvert = (state, advertId) =>
+export const getAdvert = (advertId) => (state) =>
   state.adverts.data.find((advert) => advert.id === advertId);
 
 export const getUi = (state) => state.ui;

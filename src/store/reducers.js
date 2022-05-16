@@ -7,6 +7,7 @@ import {
   AUTH_LOGIN_SUCCESS,
   AUTH_LOGOUT_SUCCESS,
   UI_RESET_ERROR,
+  ADVERT_LOADED_SUCCESS,
 } from "./types";
 
 export const defaulState = {
@@ -36,6 +37,8 @@ export const adverts = (state = defaulState.adverts, action) => {
   switch (action.type) {
     case ADVERTS_LOADED_SUCCESS:
       return { isLoaded: true, data: action.payload };
+    case ADVERT_LOADED_SUCCESS:
+      return { ...state, data: [...state.data, action.payload] };
     default:
       return state;
   }
