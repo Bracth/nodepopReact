@@ -11,6 +11,7 @@ import {
   AUTH_LOGIN_SUCCESS,
   AUTH_LOGOUT_SUCCESS,
   UI_RESET_ERROR,
+  ADVERT_CREATED_SUCCESS,
 } from "./types";
 
 export const authLoginRequest = () => ({
@@ -99,6 +100,20 @@ export const advertLoaded = (advertId) => {
     try {
       const advert = await api.adverts.getLastedAdvert(advertId);
       dispatch(advertLoadedSuccess(advert));
+    } catch (error) {}
+  };
+};
+
+export const advertCreatedSuccess = () => ({
+  type: ADVERT_CREATED_SUCCESS,
+});
+
+export const advertCreated = (advert) => {
+  return async function (dispatch, getState, { api }) {
+    try {
+      const createdAdvert = await api.adverts.createAdvert(advert);
+      dispatch(advertCreatedSuccess());
+      return createdAdvert;
     } catch (error) {}
   };
 };

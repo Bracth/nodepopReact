@@ -8,6 +8,11 @@ import {
   AUTH_LOGOUT_SUCCESS,
   UI_RESET_ERROR,
   ADVERT_LOADED_SUCCESS,
+  ADVERT_LOADED_REQUEST,
+  ADVERT_CREATED_REQUEST,
+  ADVERT_CREATED_SUCCESS,
+  ADVERT_LOADED_FAILURE,
+  ADVERT_CREATED_FAILURE,
 } from "./types";
 
 export const defaulState = {
@@ -48,12 +53,18 @@ export const ui = (state = defaulState.ui, action) => {
   switch (action.type) {
     case AUTH_LOGIN_REQUEST:
     case ADVERTS_LOADED_REQUEST:
+    case ADVERT_LOADED_REQUEST:
+    case ADVERT_CREATED_REQUEST:
       return { ...state, isLoading: true, error: null };
     case AUTH_LOGIN_SUCCESS:
     case ADVERTS_LOADED_SUCCESS:
+    case ADVERT_LOADED_SUCCESS:
+    case ADVERT_CREATED_SUCCESS:
       return { ...state, isLoading: false };
     case AUTH_LOGIN_FAILURE:
     case ADVERTS_LOADED_FAILURE:
+    case ADVERT_LOADED_FAILURE:
+    case ADVERT_CREATED_FAILURE:
       return { ...state, isLoading: false, error: action.payload };
     case UI_RESET_ERROR:
       return { ...state, error: null };
