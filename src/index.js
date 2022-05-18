@@ -21,7 +21,7 @@ const store = configureStore({ auth: !!acessToken }, { history });
 ReactDOM.render(
   <React.StrictMode>
     <Root store={store} history={history}>
-      <App isInitiallyLogged={!!acessToken} />
+      <App />
     </Root>
   </React.StrictMode>,
   document.getElementById("root")
