@@ -231,11 +231,12 @@ export const advertDeletedFailure = (error) => ({
 });
 
 export const advertDeleted = (id) => {
-  return async function (dispatch, getState, { api }) {
+  return async function (dispatch, _getState, { api, history }) {
     try {
       dispatch(advertDeletedRequest());
       const createdAdvert = await api.adverts.deleteAdvert(id);
       dispatch(advertDeletedSuccess(id));
+      history.push("/");
       return createdAdvert;
     } catch (error) {
       dispatch(advertDeletedFailure(error));

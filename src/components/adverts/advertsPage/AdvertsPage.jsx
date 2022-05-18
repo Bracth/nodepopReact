@@ -13,6 +13,7 @@ import { advertsLoaded } from "../../../store/actions";
 import { useDispatch } from "react-redux";
 import { getAdverts, getUi } from "../../../store/selectors";
 import { useSelector } from "react-redux";
+import ErrorAlert from "../../error/ErrorAlert";
 
 function AdvertsPage() {
   const [selectTags, setSelectTags] = useState([]);
@@ -32,14 +33,15 @@ function AdvertsPage() {
 
   const filteredAdverts = filterAdverts(adverts, filters, selectTags);
 
-  const { isLoading } = useSelector(getUi);
+  const { isLoading, error } = useSelector(getUi);
 
   return (
     <main>
       <AdvertsFilter
         props={{ filters, setFilters, selectTags, setSelectTags }}
       />
-      {isLoading ? <Spinner animation="border" variant="primary" /> : null}
+      {isLoading && <Spinner animation="border" variant="primary" />}
+      {error && <ErrorAlert>{error.message}</ErrorAlert>}
       <Row xs={1} md={2} className="g-4">
         {adverts.length && filteredAdverts.length ? (
           filteredAdverts.map((advert) => {

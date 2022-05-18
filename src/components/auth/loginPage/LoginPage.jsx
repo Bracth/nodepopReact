@@ -3,16 +3,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import ErrorAlert from "../../error/ErrorAlert";
-import { useLocation, useNavigate } from "react-router";
 import Spinner from "react-bootstrap/esm/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../../store/actions";
 import { getUi } from "../../../store/selectors";
 
 function LoginPage() {
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -37,8 +33,6 @@ function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(authLogin(credentials));
-    // const from = location.state?.from?.pathname || "/";
-    // navigate(from, { replace: true });
   };
 
   return (

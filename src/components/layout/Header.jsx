@@ -58,11 +58,11 @@ function Header() {
           )}
         </Stack>
       </Container>
-      {needConfirm ? (
+      {needConfirm && (
         <Notification handleConfirmation={handleConfirmation}>
           Are you sure you want to logout?
         </Notification>
-      ) : null}
+      )}
     </header>
   );
 }

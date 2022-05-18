@@ -127,7 +127,7 @@ function NewAdvert() {
       </Form>
 
       {isLoading && <Spinner animation="border" variant="primary" />}
-      {error && <ErrorAlert>Advert Can't be created</ErrorAlert>}
+      {error && <ErrorAlert>{error.message}</ErrorAlert>}
     </main>
   );
 }

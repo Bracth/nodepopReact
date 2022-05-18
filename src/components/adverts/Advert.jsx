@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Navigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useState } from "react";
 
 import Notification from "./notification/Notification";
@@ -18,24 +18,17 @@ function Advert({ props }) {
 
   const [needConfirm, setNeedConfirm] = useState(null);
 
-  const [isAdvertDeleted, setIsAdvertDeleted] = useState(null);
-
   const dispatch = useDispatch();
 
   const handleConfirmation = (sure) => {
     if (sure) {
       dispatch(advertDeleted(id));
-      setIsAdvertDeleted(true);
     } else {
       setNeedConfirm(false);
     }
   };
 
-  if (isAdvertDeleted) {
-    return <Navigate to="/" />;
-  }
-
-  const handleClick = (event) => {
+  const handleClick = () => {
     setNeedConfirm(true);
   };
 
