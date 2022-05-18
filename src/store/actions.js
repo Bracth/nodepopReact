@@ -181,8 +181,9 @@ export const advertTagsLoaded = () => {
   };
 };
 
-export const advertCreatedSuccess = () => ({
+export const advertCreatedSuccess = (advert) => ({
   type: ADVERT_CREATED_SUCCESS,
+  payload: advert,
 });
 
 export const advertCreatedRequest = () => ({
@@ -199,7 +200,7 @@ export const advertCreated = (advert) => {
     try {
       dispatch(advertCreatedRequest());
       const createdAdvert = await api.adverts.createAdvert(advert);
-      dispatch(advertCreatedSuccess());
+      dispatch(advertCreatedSuccess(createdAdvert));
       return createdAdvert;
     } catch (error) {
       dispatch(advertCreatedFailure());

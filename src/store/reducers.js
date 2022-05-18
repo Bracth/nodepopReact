@@ -57,6 +57,8 @@ export const adverts = (state = defaulState.adverts, action) => {
       return { ...state, isLoaded: true, data: action.payload };
     case ADVERT_LOADED_SUCCESS:
       return { ...state, data: [...state.data, action.payload] };
+    case ADVERT_CREATED_SUCCESS:
+      return { ...state, data: [...state.data, action.payload] };
     case ADVERT_DELETED_SUCCESS:
       return {
         ...state,
