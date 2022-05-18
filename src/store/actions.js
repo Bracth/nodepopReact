@@ -20,6 +20,9 @@ import {
   ADVERT_DELETED_SUCCESS,
   ADVERT_DELETED_REQUEST,
   ADVERT_DELETED_FAILURE,
+  AUTH_REGISTER_REQUEST,
+  AUTH_REGISTER_SUCCESS,
+  AUTH_REGISTER_FAILURE,
 } from "./types";
 
 export const authLoginRequest = () => ({
@@ -47,6 +50,32 @@ export const authLogin = (credentials) => {
       dispatch(authLoginSuccess());
     } catch (error) {
       dispatch(authLoginFailure(error));
+    }
+  };
+};
+
+export const authRegisterRequest = () => ({
+  type: AUTH_REGISTER_REQUEST,
+});
+
+export const authRegisterSuccess = () => ({
+  type: AUTH_REGISTER_SUCCESS,
+});
+
+export const authRegisterFailure = (error) => ({
+  type: AUTH_REGISTER_FAILURE,
+  payload: error,
+  error: true,
+});
+
+export const authRegister = (credentials) => {
+  return async function (dispatch, _getState, { api }) {
+    try {
+      dispatch(authRegisterRequest());
+      await api.auth.register(credentials);
+      dispatch(authRegisterSuccess());
+    } catch (error) {
+      dispatch(authRegisterFailure(error));
     }
   };
 };
