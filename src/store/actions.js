@@ -40,7 +40,7 @@ export const authLoginFailure = (error) => ({
 });
 
 export const authLogin = (credentials) => {
-  return async function (dispatch, _getState, { api }) {
+  return async function (dispatch, _getState, { api, history }) {
     try {
       dispatch(authLoginRequest());
       const response = await api.auth.login(credentials);
@@ -48,6 +48,8 @@ export const authLogin = (credentials) => {
         throw new Error("Invalid email or password");
       }
       dispatch(authLoginSuccess());
+      const from = history.location.state?.from?.pathname || "/";
+      history.replace(from);
     } catch (error) {
       dispatch(authLoginFailure(error));
     }
@@ -196,11 +198,13 @@ export const advertCreatedFailure = (error) => ({
 });
 
 export const advertCreated = (advert) => {
-  return async function (dispatch, getState, { api }) {
+  return async function (dispatch, getState, { api, history }) {
     try {
       dispatch(advertCreatedRequest());
       const createdAdvert = await api.adverts.createAdvert(advert);
       dispatch(advertCreatedSuccess(createdAdvert));
+      const from = `/adverts/${createdAdvert.id}`;
+      history.push(from);
       return createdAdvert;
     } catch (error) {
       dispatch(advertCreatedFailure());

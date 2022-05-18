@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createBrowserHistory } from "history";
 import App from "./App";
 import storage from "./utils/storage";
 import { setAuthorizationHeader } from "./api/client";
@@ -13,11 +14,13 @@ if (acessToken) {
   setAuthorizationHeader(acessToken);
 }
 
-const store = configureStore({ auth: !!acessToken });
+const history = createBrowserHistory();
+
+const store = configureStore({ auth: !!acessToken }, { history });
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root store={store}>
+    <Root store={store} history={history}>
       <App isInitiallyLogged={!!acessToken} />
     </Root>
   </React.StrictMode>,

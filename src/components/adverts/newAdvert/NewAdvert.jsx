@@ -3,7 +3,6 @@ import { useState } from "react";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Navigate } from "react-router";
 import SelectTags from "../selectTags/SelectTags";
 import { useDispatch, useSelector } from "react-redux";
 import { advertCreated } from "../../../store/actions";
@@ -24,8 +23,6 @@ function NewAdvert() {
 
   const [photo, setPhoto] = useState(null);
 
-  const [advertId, setAdvertId] = useState(null);
-
   const { name, price, saling } = advertInfo;
 
   const handleChange = (event) => {
@@ -36,12 +33,7 @@ function NewAdvert() {
   };
 
   const handleCreateAdvert = async (formData) => {
-    try {
-      const advert = await dispatch(advertCreated(formData));
-      setAdvertId(advert.id);
-    } catch (error) {
-      console.log(error.message);
-    }
+    dispatch(advertCreated(formData));
   };
 
   const handleSubmit = (event) => {
@@ -69,10 +61,6 @@ function NewAdvert() {
   const uploadImage = (event) => {
     setPhoto(event.target.files[0]);
   };
-
-  if (advertId) {
-    return <Navigate to={`/adverts/${advertId}`} />;
-  }
 
   return (
     <main>
