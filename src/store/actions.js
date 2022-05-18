@@ -139,6 +139,7 @@ export const advertLoadedRequest = () => ({
 export const advertLoadedFailure = (error) => ({
   type: ADVERT_LOADED_FAILURE,
   payload: error,
+  error: true,
 });
 
 export const advertLoaded = (advertId) => {
@@ -167,6 +168,7 @@ export const advertTagsLoadedRequest = () => ({
 export const advertTagsLoadedFailure = (error) => ({
   type: ADVERT_TAGS_LOADED_FAILURE,
   payload: error,
+  error: true,
 });
 
 export const advertTagsLoaded = () => {
@@ -195,6 +197,7 @@ export const advertCreatedRequest = () => ({
 export const advertCreatedFailure = (error) => ({
   type: ADVERT_CREATED_FAILURE,
   payload: error,
+  error: true,
 });
 
 export const advertCreated = (advert) => {
@@ -207,7 +210,7 @@ export const advertCreated = (advert) => {
       history.push(from);
       return createdAdvert;
     } catch (error) {
-      dispatch(advertCreatedFailure());
+      dispatch(advertCreatedFailure(error));
     }
   };
 };
@@ -224,6 +227,7 @@ export const advertDeletedRequest = () => ({
 export const advertDeletedFailure = (error) => ({
   type: ADVERT_DELETED_FAILURE,
   payload: error,
+  error: true,
 });
 
 export const advertDeleted = (id) => {
@@ -234,7 +238,7 @@ export const advertDeleted = (id) => {
       dispatch(advertDeletedSuccess(id));
       return createdAdvert;
     } catch (error) {
-      dispatch(advertDeletedFailure());
+      dispatch(advertDeletedFailure(error));
     }
   };
 };

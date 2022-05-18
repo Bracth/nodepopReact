@@ -25,9 +25,23 @@ const timestamp = () => (next) => (action) => {
   return next(newAction);
 };
 
+const errorRedirections =
+  (history, redirections) => (_store) => (next) => (action) => {
+    const result = next(action);
+    if (action.error) {
+      const redirection = redirections[action.payload.status];
+      if (redirection) {
+        history.push(redirection);
+      }
+    }
+
+    return result;
+  };
+
 const configureStore = (preloadedState, { history }) => {
   const middlewares = [
     thunk.withExtraArgument({ api, history }),
+    errorRedirections(history, { 401: "/login", 404: "/login" }),
     timestamp,
     logger,
   ];
