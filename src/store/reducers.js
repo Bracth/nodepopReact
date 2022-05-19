@@ -54,9 +54,8 @@ export const auth = (state = defaulState.auth, action) => {
 export const adverts = (state = defaulState.adverts, action) => {
   switch (action.type) {
     case ADVERTS_LOADED_SUCCESS:
-      return { ...state, isLoaded: true, data: action.payload };
+      return { isLoaded: true, data: action.payload };
     case ADVERT_LOADED_SUCCESS:
-      return { ...state, data: [...state.data, action.payload] };
     case ADVERT_CREATED_SUCCESS:
       return { ...state, data: [...state.data, action.payload] };
     case ADVERT_DELETED_SUCCESS:
