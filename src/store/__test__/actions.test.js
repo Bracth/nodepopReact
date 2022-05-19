@@ -1,4 +1,4 @@
-import { authLogin, authLoginRequest, advertsLoadedSuccess } from "../actions";
+import { authLoginRequest, advertsLoadedSuccess } from "../actions";
 import { ADVERTS_LOADED_SUCCESS, AUTH_LOGIN_REQUEST } from "../types";
 
 describe("authLoginRequest", () => {
