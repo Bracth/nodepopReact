@@ -13,8 +13,7 @@ export const login = async ({ remember, ...credentials }) => {
     }
     return acessToken;
   } catch (error) {
-    console.log(error.message);
-    return error;
+    throw new Error(error.message);
   }
 };
 

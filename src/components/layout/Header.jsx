@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Notification from "../adverts/notification/Notification";
 import "./header.css";
-import { authLogoutSucces } from "../../store/actions";
+import { authLogout } from "../../store/actions";
 import { getIsLogged } from "../../store/selectors";
 
 function Header() {
@@ -20,7 +20,7 @@ function Header() {
   const handleConfirmation = async (sure) => {
     if (sure) {
       setNeedconfirm(false);
-      dispatch(authLogoutSucces());
+      dispatch(authLogout());
     } else {
       setNeedconfirm(false);
     }

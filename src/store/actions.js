@@ -43,10 +43,7 @@ export const authLogin = (credentials) => {
   return async function (dispatch, _getState, { api, history }) {
     try {
       dispatch(authLoginRequest());
-      const response = await api.auth.login(credentials);
-      if (response.status === 401) {
-        throw new Error("Invalid email or password");
-      }
+      await api.auth.login(credentials);
       dispatch(authLoginSuccess());
       const from = history.location.state?.from?.pathname || "/";
       history.replace(from);
@@ -90,7 +87,7 @@ export const authLogout = () => {
   return async function (dispatch, _getState, { api }) {
     try {
       const response = await api.auth.logout();
-      dispatch(authLoginSuccess());
+      dispatch(authLogoutSucces());
       return response;
     } catch (error) {
       console.log(error);
