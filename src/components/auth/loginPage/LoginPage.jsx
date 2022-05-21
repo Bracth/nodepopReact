@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import ErrorAlert from "../../error/ErrorAlert";
-import Spinner from "react-bootstrap/esm/Spinner";
+import Spinner from "react-bootstrap/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../../store/actions";
 import { getUi } from "../../../store/selectors";
@@ -20,13 +20,10 @@ function LoginPage() {
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector(getUi);
 
-  const handleChange = (event) => {
+  const handleChange = ({ target: { value, name, type, checked } }) => {
     setCredentials((credentials) => ({
       ...credentials,
-      [event.target.name]:
-        event.target.type === "checkbox"
-          ? event.target.checked
-          : event.target.value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -35,10 +32,16 @@ function LoginPage() {
     dispatch(authLogin(credentials));
   };
 
+  const disabledButton = useMemo(() => {
+    return !email || !password || isLoading;
+  }, [email, password, isLoading]);
+
   return (
     <main>
       {error ? <ErrorAlert>{error.message}</ErrorAlert> : null}
-      {isLoading ? <Spinner animation="border" variant="primary" /> : null}
+      {isLoading ? (
+        <Spinner data-testid="spinner" animation="border" variant="primary" />
+      ) : null}
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -74,7 +77,7 @@ function LoginPage() {
             onChange={handleChange}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" disabled={disabledButton}>
           Submit
         </Button>
       </Form>
