@@ -73,6 +73,7 @@ export const authRegister = (credentials) => {
       dispatch(authRegisterRequest());
       await api.auth.register(credentials);
       dispatch(authRegisterSuccess());
+      dispatch(authLogin(credentials));
     } catch (error) {
       dispatch(authRegisterFailure(error));
     }

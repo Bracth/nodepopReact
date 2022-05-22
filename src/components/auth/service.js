@@ -30,6 +30,6 @@ export const register = async (credentials) => {
   try {
     await client.post("/auth/signup", credentials);
   } catch (error) {
-    console.log(error.message);
+    throw new Error(error.message);
   }
 };

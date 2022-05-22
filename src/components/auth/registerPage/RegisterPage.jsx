@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/esm/Spinner";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogin, authRegister } from "../../../store/actions";
+import { authRegister } from "../../../store/actions";
 import { getUi } from "../../../store/selectors";
 import ErrorAlert from "../../error/ErrorAlert";
 
@@ -28,17 +28,15 @@ function RegisterPage() {
     }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(authRegister(credentials));
-    const loginCredentials = { email, password, remember: true };
-    dispatch(authLogin(loginCredentials));
   };
 
   return (
     <main onSubmit={handleSubmit}>
       {isLoading && <Spinner animation="border" variant="primary" />}
-      {error && <ErrorAlert>Advert not found</ErrorAlert>}
+      {error && <ErrorAlert>{error.message}</ErrorAlert>}
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
